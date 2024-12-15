@@ -12,8 +12,6 @@ import (
 )
 
 func main() {
-	db.InitDB()
-	defer db.CloseDB()
 
 	err := godotenv.Load()
 	if err == nil {
@@ -21,6 +19,10 @@ func main() {
 	} else {
 		log.Print("No .env file found, using system environment variables")
 	}
+
+	db.InitDB()
+	defer db.CloseDB()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

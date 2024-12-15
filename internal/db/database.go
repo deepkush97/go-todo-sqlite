@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"log"
+	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -10,8 +11,17 @@ import (
 var db *sql.DB
 
 func InitDB() {
+
+	dbUrl := os.Getenv("DATABASE_URL")
+	if dbUrl == "" {
+		dbUrl = "./todo.db"
+		log.Printf("Environment variable DATABASE_URL not set. Using default url: %s", dbUrl)
+	} else {
+		log.Printf("Using dbUrl from environment variable: %s", dbUrl)
+	}
+
 	var err error
-	db, err = sql.Open("sqlite3", "./todo.db")
+	db, err = sql.Open("sqlite3", dbUrl)
 	if err != nil {
 		log.Fatalf("Error opening database: %v", err)
 	}
