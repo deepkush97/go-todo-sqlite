@@ -44,7 +44,6 @@ func GetTodoByIDHandler(c *gin.Context) {
 	}
 
 	todo, err := GetTodoByID(id)
-	log.Printf("err %v", err)
 	if err != nil {
 		if err.Error() == "not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})

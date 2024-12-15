@@ -45,7 +45,6 @@ func getOneTodo(id int) (*Todo, error) {
 	}
 
 	todo := Todo{}
-	log.Printf("todo %v", todo)
 
 	defer rows.Close()
 
