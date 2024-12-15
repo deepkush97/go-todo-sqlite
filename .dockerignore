@@ -27,3 +27,5 @@ vendor/
 README.md
 
 client.http
+
+Dockerfile*

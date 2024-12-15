@@ -1,0 +1,31 @@
+FROM golang:1.23-alpine AS builder
+
+RUN apk add alpine-sdk
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+ENV CGO_ENABLED=1
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o main ./cmd/go-todo-sqlite
+
+FROM alpine:latest
+
+
+WORKDIR /app
+
+COPY --from=builder /app/main .
+
+EXPOSE 8080
+
+ENV PORT=8080
+ENV GIN_MODE=release
+ENV DATABASE_URL=./todo.db
+ENV CGO_ENABLED=1
+
+CMD ["./main"]
