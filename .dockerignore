@@ -1,0 +1,29 @@
+# Ignore the vendor directory if not using vendoring
+vendor/
+
+# Ignore Go test binaries
+*.test
+
+# Ignore local environment files
+.env
+*.env
+
+# Ignore build artifacts
+*.exe
+*.out
+*.o
+
+# Ignore IDE/project configuration files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore version control folders
+.git/
+.gitignore
+
+
+README.md
+
+client.http

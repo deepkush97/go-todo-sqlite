@@ -1,0 +1,32 @@
+FROM golang:1.23 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o main ./cmd/go-todo-sqlite
+
+
+FROM golang:1.23 AS runner
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/main .
+
+
+EXPOSE 8080
+
+ENV PORT=8080
+ENV GIN_MODE=release
+ENV DATABASE_URL=./todo.db
+
+# Command to run the application
+CMD ["./main"]
