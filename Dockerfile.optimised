@@ -6,16 +6,13 @@ WORKDIR /app
 
 COPY go.mod go.sum ./
 
-ENV CGO_ENABLED=1
-
 RUN go mod download
 
 COPY . .
 
-RUN go build -o main ./cmd/go-todo-sqlite
+RUN CGO_ENABLED=1 go build -o main ./cmd/go-todo-sqlite
 
 FROM alpine:latest
-
 
 WORKDIR /app
 
